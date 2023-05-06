@@ -5,6 +5,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:tesla:1
 #SBATCH --time=4000
+#SBATCH --nodelist=falcon5
 
 module load any/python/3.8.3-conda
 
