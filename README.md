@@ -1,6 +1,6 @@
 # AI-powered QA system for University of Tartu courses
 
-## LLaMA inference on HPC V100
+## LLaMA inference on HPC
 
 ### Create conda environment
 ```
@@ -22,8 +22,20 @@ cp tartu-nlp-courses-qa/Makefile bitsandbytes/
 ```
 
 ### Start interactive session on HPC
+
+Optional: start srun in `tmux` to keep the session running after disconnecting from the server.
+
+For tesla GPU:
 ```
 srun --partition=gpu --gres=gpu:tesla:1  --mem=32G  --time=120 --cpus-per-task=4 --pty /bin/bash
+```
+For a100 GPU:
+```
+srun --partition=gpu --gres=gpu:a100-40g  --mem=32G  --time=120 --cpus-per-task=4 --pty /bin/bash
+```
+
+```
+module load cuda/11.7.0 # for a100 gpu only!
 
 module load any/python/3.8.3-conda
 
