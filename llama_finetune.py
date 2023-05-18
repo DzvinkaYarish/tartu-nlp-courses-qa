@@ -35,7 +35,7 @@ def get_args():
     # parser.add_argument("--shuffle_buffer", type=int, default=5000)
 
     parser.add_argument("--seq_length", type=int, default=1024)
-    parser.add_argument("--max_steps", type=int, default=40000)
+    parser.add_argument("--max_steps", type=int, default=50000)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1)
     parser.add_argument("--eos_token_id", type=int, default=49152)
@@ -269,13 +269,14 @@ def run_training(args, train_data, val_data):
         run_name=args.run_name,
         report_to="wandb",
         ddp_find_unused_parameters=False,
-        load_best_model_at_end=True,
+        # load_best_model_at_end=True, # ToDo: load best model at the end doesn;t work with LoRA
         metric_for_best_model="eval_loss",
 
     )
 
     trainer = Trainer(model=model, args=training_args, train_dataset=train_data, eval_dataset=val_data,
-                      callbacks=[EarlyStoppingCallback(early_stopping_patience=3, early_stopping_threshold=0.01)])
+                      # callbacks=[EarlyStoppingCallback(early_stopping_patience=3, early_stopping_threshold=0.01)]
+                      )
 
     print("Training...")
     trainer.train()
