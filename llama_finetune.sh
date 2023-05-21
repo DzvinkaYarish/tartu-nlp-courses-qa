@@ -13,7 +13,7 @@ module load any/python/3.8.3-conda
 conda activate nlp
 
 ROOT=/gpfs/space/projects/stud_ml_22/NLP
-RUN_NAME=a100_8_bit
+RUN_NAME=a100_longer_training_vicuna
 
 nvidia-smi
 

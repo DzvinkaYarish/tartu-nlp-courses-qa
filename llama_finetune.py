@@ -18,8 +18,8 @@ Fine-Tune Llama-7b on SE paired dataset
 """
 
 ROOT = "/gpfs/space/projects/stud_ml_22/NLP"
-PATH_TO_CONVERTED_TOKENIZER = os.path.join(ROOT, "llama/7B_converted/")
-PATH_TO_CONVERTED_WEIGHTS = os.path.join(ROOT, "llama/7B_converted/")
+PATH_TO_CONVERTED_TOKENIZER = os.path.join(ROOT, "llama/7B_Vicuna_added/")
+PATH_TO_CONVERTED_WEIGHTS = os.path.join(ROOT, "llama/7B_Vicuna_added/")
 PATH_TO_DATASET = os.path.join(ROOT, "data/course_questions.pkl")
 
 
@@ -30,7 +30,7 @@ def get_args():
     parser.add_argument("--dataset_path", type=str, default=PATH_TO_DATASET)
     # parser.add_argument("--subset", type=str, default="data/finetune")
     # parser.add_argument("--split", type=str, default="train")
-    parser.add_argument("--frac_valid_set", type=float, default=0.05)
+    parser.add_argument("--frac_valid_set", type=float, default=0.03)
     # parser.add_argument("--streaming", action="store_true")
     # parser.add_argument("--shuffle_buffer", type=int, default=5000)
 
@@ -225,10 +225,10 @@ def run_training(args, train_data, val_data):
         config=config,
         trust_remote_code=True,
         # use_cache=not args.no_gradient_checkpointing, # TODO: fix unexpected arg error
-        load_in_8bit=True,
+        # load_in_8bit=True,
         device_map={"": Accelerator().process_index},
     )
-    model = prepare_model_for_int8_training(model)
+    # model = prepare_model_for_int8_training(model)
 
     model.enable_input_require_grads()
 
@@ -263,7 +263,7 @@ def run_training(args, train_data, val_data):
         warmup_steps=args.num_warmup_steps,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         gradient_checkpointing=not args.no_gradient_checkpointing,
-        fp16=not args.no_fp16,
+        fp16=False,
         bf16=args.bf16,
         weight_decay=args.weight_decay,
         run_name=args.run_name,
