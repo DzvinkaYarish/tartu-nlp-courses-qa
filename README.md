@@ -5,8 +5,8 @@
 ### Create conda environment
 ```
 git clone https://github.com/DzvinkaYarish/tartu-nlp-courses-qa.git
-conda create -n nlp python=3.10 --file tartu-nlp-courses-qa/nlp_env.txt
-conda activate nlp
+conda create -n qa_env python=3.10 --file tartu-nlp-courses-qa/env.txt
+conda activate qa_env
 
 pip install sentencepiece
 pip install accelerate
@@ -18,7 +18,7 @@ wandb login
 ### Clone acceleration library for Transformers
 ```
 git clone https://github.com/timdettmers/bitsandbytes.git
-cp tartu-nlp-courses-qa/Makefile bitsandbytes/
+cp tartu-nlp-courses-qa/fine-tuning/Makefile bitsandbytes/
 ```
 
 ### Start interactive session on HPC
@@ -55,7 +55,7 @@ python3.10 setup.py install
 
 #### Run LLaMA inference
 ```
-cd ../tartu-nlp-courses-qa/
+cd ../tartu-nlp-courses-qa/fine-tuning
 python3.10 llama_inference.py
 
 ```
